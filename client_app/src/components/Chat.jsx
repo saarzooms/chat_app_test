@@ -9,13 +9,16 @@ const Chat = () => {
     const socket = io('http://localhost:3000')
     //on message or socket change call this
     useEffect(()=>{
-        // socket.on("chat message",(msg)=>{})
+        socket.on("chat message",(msg)=>{
+            setMessages([...messages,msg])
+        })
     },[messages,socket])
 
     const handleSubmit = (e)=>{
         e.preventDefault();
         if(msgData!==""){
             console.log(msgData);
+            socket.emit("chat_message", msgData)
             setMsgData("")
         }
     }
